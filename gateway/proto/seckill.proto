@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+option go_package = "seckill/proto";
+
+package seckill;
+
+import "google/api/annotations.proto";
+
+service Seckill {
+	rpc Call(Request) returns (Response){
+        option (google.api.http) = {
+            get: "/v1/seckill"
+        };
+	}
+}
+
+message Request {
+	string name = 1;
+}
+
+message Response {
+	string msg = 1;
+}
+

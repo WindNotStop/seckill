@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 	"flag"
-	gw "github.com/WindNotStop/seckill/helloworld/helloworld"
+	gw "github.com/WindNotStop/seckill/gateway/proto"
 	"github.com/golang/glog"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"google.golang.org/grpc"
@@ -25,7 +25,7 @@ func run() error {
 	// Note: Make sure the gRPC server is running properly and accessible
 	mux := runtime.NewServeMux()
 	opts := []grpc.DialOption{grpc.WithInsecure()}
-	err := gw.RegisterGreeterHandlerFromEndpoint(ctx, mux,  *grpcServerEndpoint, opts)
+	err := gw.RegisterSeckillHandlerFromEndpoint(ctx, mux,  *grpcServerEndpoint, opts)
 	if err != nil {
 		return err
 	}

@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option go_package = "seckill/proto";
+
+package seckill;
+
+service Seckill {
+	rpc Call(Request) returns (Response){}
+}
+
+message Request {
+	string name = 1;
+}
+
+message Response {
+	string msg = 1;
+}
+
