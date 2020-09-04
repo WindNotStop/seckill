@@ -17,7 +17,7 @@ spec:
       containers:
         - name: seckill
           image: taenyang/seckill:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - name: grpc
               containerPort: 9090
