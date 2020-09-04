@@ -4,12 +4,12 @@ MODIFY=Mproto/imports/api.proto=github.com/micro/go-micro/v2/api/proto
 
 .PHONY: proto
 proto:
-    
+
 	protoc --proto_path=. --micro_out=${MODIFY}:. --go_out=${MODIFY}:.  seckill/proto/seckill.proto
 
 
 .PHONY: build
-build: proto
+build:
 
 	go build -o seckill *.go
 
