@@ -1,3 +1,3 @@
 FROM debian
-ADD seckill-service /seckill
-ENTRYPOINT [ "/seckill","--server_address=:9090"]
+ADD seckill-service /seckill-service
+ENTRYPOINT [ "/seckill-service","--server_address=:9090"]
