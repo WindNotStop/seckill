@@ -18,14 +18,10 @@ func main() {
 
 	nodes := []string{"redis://my-keydb-1.my-keydb:6379", "redis://my-keydb-1.my-keydb:6379"}
 
-	redisOptions, err := redis.ParseURL(nodes[0])
-	if err != nil {
-		//Backwards compatibility
-		redisOptions = &redis.Options{
+	redisOptions := &redis.Options{
 			Addr:     nodes[0],
 			Password: "thanks@jdsully", // no password set
 			DB:       0,  // use default DB
-		}
 	}
 
 	rkv := redis.NewClient(redisOptions)
