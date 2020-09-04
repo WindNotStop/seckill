@@ -11,8 +11,8 @@ proto:
 .PHONY: build
 build:
 
-	go build -o seckill *.go
-	chmod a+x seckill
+	go build -o seckill-service *.go
+
 
 .PHONY: test
 test:
