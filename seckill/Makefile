@@ -12,6 +12,7 @@ proto:
 build:
 
 	go build -o seckill *.go
+	chmod a+x seckill
 
 .PHONY: test
 test:
