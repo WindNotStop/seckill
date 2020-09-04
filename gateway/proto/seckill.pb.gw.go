@@ -50,7 +50,7 @@ func request_Seckill_Call_0(ctx context.Context, marshaler runtime.Marshaler, cl
 	return msg, metadata, err
 
 }
-//
+
 //func local_request_Seckill_Call_0(ctx context.Context, marshaler runtime.Marshaler, server SeckillServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 //	var protoReq Request
 //	var metadata runtime.ServerMetadata
