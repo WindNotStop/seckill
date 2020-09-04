@@ -9,7 +9,7 @@ proto:
 	protoc -I. --grpc-gateway_out=logtostderr=true,paths=source_relative:. proto/seckill.proto
 
 .PHONY: build
-build: 
+build:
 
 	go build -o gateway *.go
 

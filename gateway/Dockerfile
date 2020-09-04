@@ -1,3 +1,3 @@
 FROM debian
-ADD seckill /seckill
-ENTRYPOINT [ "/seckill"]
+ADD gateway /gateway
+ENTRYPOINT [ "/gateway"]
