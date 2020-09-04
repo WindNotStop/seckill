@@ -1,61 +1,47 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "seckill.fullname" . }}
+  name: gateway
   labels:
-    {{- include "seckill.labels" . | nindent 4 }}
+    app: gateway
 spec:
-{{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
-{{- end }}
+  replicas: 3
   selector:
     matchLabels:
-      {{- include "seckill.selectorLabels" . | nindent 6 }}
+      app: gateway
   template:
     metadata:
-    {{- with .Values.podAnnotations }}
-      annotations:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
       labels:
-        {{- include "seckill.selectorLabels" . | nindent 8 }}
+        app: gateway
     spec:
-      {{- with .Values.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      serviceAccountName: {{ include "seckill.serviceAccountName" . }}
-      securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        - name: {{ .Chart.Name }}
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+        - name: gateway
+          image: taenyang/gateway:latest
+          imagePullPolicy: IfNotPresent
           ports:
             - name: http
-              containerPort: 80
-              protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
-      {{- with .Values.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+              containerPort: 8081
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: seckill
+  labels:
+    app: seckill
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: seckill
+  template:
+    metadata:
+      labels:
+        app: seckill
+    spec:
+      containers:
+        - name: seckill
+          image: taenyang/seckill:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: grpc
+              containerPort: 9090

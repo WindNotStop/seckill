@@ -1,15 +1,28 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "seckill.fullname" . }}
+  name: gateway
   labels:
-    {{- include "seckill.labels" . | nindent 4 }}
+    app: gateway
 spec:
-  type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
-      protocol: TCP
-      name: http
+    - name: api-port
+      port: 8080
+      nodePort: 30080
   selector:
-    {{- include "seckill.selectorLabels" . | nindent 4 }}
+    app: gateway
+  type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: seckill
+  labels:
+    app: seckill
+spec:
+  ports:
+    - name: port
+      port: 9090
+      targetPort: 9090
+  selector:
+    app: seckill
