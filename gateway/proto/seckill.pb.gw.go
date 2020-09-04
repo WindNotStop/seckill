@@ -50,51 +50,51 @@ func request_Seckill_Call_0(ctx context.Context, marshaler runtime.Marshaler, cl
 	return msg, metadata, err
 
 }
-
-func local_request_Seckill_Call_0(ctx context.Context, marshaler runtime.Marshaler, server SeckillServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq Request
-	var metadata runtime.ServerMetadata
-
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_Seckill_Call_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-
-	msg, err := server.Call(ctx, &protoReq)
-	return msg, metadata, err
-
-}
+//
+//func local_request_Seckill_Call_0(ctx context.Context, marshaler runtime.Marshaler, server SeckillServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+//	var protoReq Request
+//	var metadata runtime.ServerMetadata
+//
+//	if err := req.ParseForm(); err != nil {
+//		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+//	}
+//	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_Seckill_Call_0); err != nil {
+//		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+//	}
+//
+//	msg, err := server.Call(ctx, &protoReq)
+//	return msg, metadata, err
+//
+//}
 
 // RegisterSeckillHandlerServer registers the http handlers for service Seckill to "mux".
 // UnaryRPC     :call SeckillServer directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
 // Note that using this registration option will cause many gRPC library features (such as grpc.SendHeader, etc) to stop working. Consider using RegisterSeckillHandlerFromEndpoint instead.
-func RegisterSeckillHandlerServer(ctx context.Context, mux *runtime.ServeMux, server SeckillServer) error {
-
-	mux.Handle("GET", pattern_Seckill_Call_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := local_request_Seckill_Call_0(rctx, inboundMarshaler, server, req, pathParams)
-		ctx = runtime.NewServerMetadataContext(ctx, md)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-
-		forward_Seckill_Call_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-
-	})
-
-	return nil
-}
+//func RegisterSeckillHandlerServer(ctx context.Context, mux *runtime.ServeMux, server SeckillServer) error {
+//
+//	mux.Handle("GET", pattern_Seckill_Call_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+//		ctx, cancel := context.WithCancel(req.Context())
+//		defer cancel()
+//		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+//		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+//		if err != nil {
+//			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+//			return
+//		}
+//		resp, md, err := local_request_Seckill_Call_0(rctx, inboundMarshaler, server, req, pathParams)
+//		ctx = runtime.NewServerMetadataContext(ctx, md)
+//		if err != nil {
+//			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+//			return
+//		}
+//
+//		forward_Seckill_Call_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+//
+//	})
+//
+//	return nil
+//}
 
 // RegisterSeckillHandlerFromEndpoint is same as RegisterSeckillHandler but
 // automatically dials to "endpoint" and closes the connection when "ctx" gets done.

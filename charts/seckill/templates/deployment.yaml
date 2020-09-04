@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: seckill
+  labels:
+    app: seckill
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: seckill
+  template:
+    metadata:
+      labels:
+        app: seckill
+    spec:
+      containers:
+        - name: seckill
+          image: taenyang/seckill:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: grpc
+              containerPort: 9090

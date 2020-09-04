@@ -1,30 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: gateway
-  labels:
-    app: gateway
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: gateway
-  template:
-    metadata:
-      labels:
-        app: gateway
-    spec:
-      containers:
-        - name: gateway
-          image: taenyang/gateway:latest
-          imagePullPolicy: IfNotPresent
-          ports:
-            - name: http
-              containerPort: 8081
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
   name: seckill
   labels:
     app: seckill
@@ -45,3 +21,27 @@ spec:
           ports:
             - name: grpc
               containerPort: 9090
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway
+  labels:
+    app: gateway
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: gateway
+  template:
+    metadata:
+      labels:
+        app: gateway
+    spec:
+      containers:
+        - name: gateway
+          image: taenyang/gateway:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8081

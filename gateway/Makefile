@@ -4,7 +4,7 @@ MODIFY=Mgrpc/service_config/service_config.proto=/internal/proto/grpc_service_co
 
 .PHONY: proto
 proto:
-	protoc   --go_out=${MODIFY}:.   --go-grpc_out=${MODIFY}:.   --go_opt=paths=source_relative   --go-grpc_opt=paths=source_relative   proto/seckill.proto
+	#protoc   --go_out=${MODIFY}:.   --go-grpc_out=${MODIFY}:.   --go_opt=paths=source_relative   --go-grpc_opt=paths=source_relative   proto/seckill.proto
 	protoc -I. --grpc-gateway_out=logtostderr=true,paths=source_relative:. proto/seckill.proto
 
 .PHONY: build
