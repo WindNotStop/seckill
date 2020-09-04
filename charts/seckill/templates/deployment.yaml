@@ -14,6 +14,7 @@ spec:
       labels:
         app: seckill
     spec:
+      serviceAccountName: micro-services
       containers:
         - name: seckill
           image: taenyang/seckill:latest
