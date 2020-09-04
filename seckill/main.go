@@ -23,7 +23,7 @@ func main() {
 		//Backwards compatibility
 		redisOptions = &redis.Options{
 			Addr:     nodes[0],
-			Password: "", // no password set
+			Password: "thanks@jdsully", // no password set
 			DB:       0,  // use default DB
 		}
 	}
