@@ -9,4 +9,8 @@ test:
 docker:
 	docker build . -t taenyang/user:latest
 
+.PHONY: push
+push:
+	docker push taenyang/user:latest
+
 

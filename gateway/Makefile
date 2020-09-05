@@ -21,4 +21,8 @@ test:
 docker:
 	docker build . -t taenyang/gateway:latest
 
+.PHONY: push
+push:
+	docker push taenyang/gateway:latest
+
 

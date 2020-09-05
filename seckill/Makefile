@@ -22,4 +22,8 @@ test:
 docker:
 	docker build . -t taenyang/seckill:latest
 
+.PHONY: push
+push:
+	docker push taenyang/seckill:latest
+
 
