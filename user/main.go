@@ -10,8 +10,14 @@ import (
 	"github.com/panjf2000/ants/v2"
 )
 
+var(
+	requestURL = "http://localhost:8081/v1/seckill?name=iphone"
+	users = 20
+)
+
+
 func doGet(i interface{}) {
-	rsp, err := http.Get("http://localhost:8081/v1/seckill?name=iphone")
+	rsp, err := http.Get(requestURL)
 	if err != nil {
 		log.Fatal(err.Error())
 	}
@@ -24,13 +30,12 @@ func doGet(i interface{}) {
 
 func main() {
 	var wg sync.WaitGroup
-	runTimes := 20
 	log.Println("cpu:", runtime.NumCPU())
 	p, _ := ants.NewPoolWithFunc(runtime.NumCPU(), func(i interface{}) {
 		doGet(i)
 		wg.Done()
 	})
-	for i := 0; i < runTimes; i++ {
+	for i := 0; i < users; i++ {
 		wg.Add(1)
 		_ = p.Invoke(int32(i))
 	}

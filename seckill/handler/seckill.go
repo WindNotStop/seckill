@@ -1,13 +1,17 @@
 package handler
 
 import (
+
 	"context"
+	"strconv"
+	"time"
+
 	pb "github.com/WindNotStop/seckill/seckill/seckill/proto"
+
 	"github.com/go-redis/redis/v7"
 	"github.com/micro/go-micro/v2/client"
 	"github.com/micro/go-micro/v2/util/log"
-	"strconv"
-	"time"
+
 )
 
 type Seckill struct {
@@ -15,7 +19,7 @@ type Seckill struct {
 	Rkv    *redis.Client
 }
 
-// Call is a single request handler called via client.Call or the generated client code
+
 func (s *Seckill) Call(ctx context.Context, req *pb.Request, rsp *pb.Response) error {
 	log.Info("call")
 	arg := req.Name

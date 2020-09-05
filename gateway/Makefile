@@ -7,6 +7,7 @@ proto:
 
 	protoc   --go_out=${MODIFY}:.   --go-grpc_out=${MODIFY}:.   --go_opt=paths=source_relative   --go-grpc_opt=paths=source_relative   proto/seckill.proto
 	protoc -I. --grpc-gateway_out=logtostderr=true,paths=source_relative:. proto/seckill.proto
+	protoc -I. --swagger_out=logtostderr=true:. proto/seckill.proto
 
 .PHONY: build
 build:
