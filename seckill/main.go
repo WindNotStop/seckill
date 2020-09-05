@@ -16,7 +16,7 @@ func main() {
 	)
 	service.Init()
 
-	nodes := []string{"redis://my-keydb-0.my-keydb:6379", "redis://my-keydb-1.my-keydb:6379"}
+	nodes := []string{"redis://rfs-redisfailover-0.rfs-redisfailover:6379", "redis://rfs-redisfailover-1.rfs-redisfailover:6379","redis://rfs-redisfailover-2.rfs-redisfailover:6379"}
 	//nodes := []string{"redis://localhost:6379", "redis://localhost:6380"}
 
 	redisOptions, err := redis.ParseURL(nodes[0])
