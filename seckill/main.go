@@ -16,17 +16,13 @@ func main() {
 	)
 	service.Init()
 
-	nodes := []string{"redis://:thanks@jdsully@my-keydb-0.my-keydb:6379", "redis://:thanks@jdsully@my-keydb-1.my-keydb:6379"}
+	nodes := []string{"redis://my-keydb-0.my-keydb:6379", "redis://my-keydb-1.my-keydb:6379"}
+	//nodes := []string{"redis://localhost:6379", "redis://localhost:6380"}
 
 	redisOptions, err := redis.ParseURL(nodes[0])
 
 	if err != nil {
-		//Backwards compatibility
-		redisOptions = &redis.Options{
-			Addr:     nodes[0],
-			Password: "thanks@jdsully", // no password set
-			DB:       0,  // use default DB
-		}
+		log.Error(err.Error())
 	}
 
 	rkv := redis.NewClient(redisOptions)
