@@ -21,3 +21,9 @@ spec:
           ports:
             - name: grpc
               containerPort: 9090
+          livenessProbe:
+            tcpSocket:
+              port: grpc
+          readinessProbe:
+            tcpSocket:
+              port: grpc

@@ -1,9 +1,9 @@
 package main
 
 import (
-
 	"time"
 
+	. "github.com/WindNotStop/seckill/seckill/config"
 	"github.com/WindNotStop/seckill/seckill/handler"
 	"github.com/WindNotStop/seckill/seckill/ratelimiter"
 	pb "github.com/WindNotStop/seckill/seckill/seckill/proto"
@@ -12,35 +12,26 @@ import (
 	"github.com/juju/ratelimit"
 	"github.com/micro/go-micro/v2"
 	"github.com/micro/go-micro/v2/util/log"
-
-)
-
-var(
-	serviceName = "seckill"
-	serviceVersion = "v1"
-
-	redisURL = "redis://redis:6379"
-
-	fillInterval = time.Millisecond
-	capacity int64 = 1000
 )
 
 func main() {
 
 	service := micro.NewService(
-		micro.Name(serviceName),
-		micro.Version(serviceVersion),
-		micro.WrapHandler(ratelimiter.NewHandlerWrapper(ratelimit.NewBucket(fillInterval,capacity),false)),
+		micro.Name(ServiceName),
+		micro.Version(ServiceVersion),
+		micro.WrapHandler(ratelimiter.NewHandlerWrapper(ratelimit.NewBucket(FillInterval,Capacity),false)),
 	)
 	service.Init()
 
-	nodes := []string{redisURL}
+	nodes := []string{RedisURL}
 	redisOptions, err := redis.ParseURL(nodes[0])
 	if err != nil {
 		log.Error(err.Error())
 	}
 	rkv := redis.NewClient(redisOptions)
-	rkv.Set("num", 10, 24*time.Hour)
+	expiration := time.Duration(EndTime.UnixNano()-time.Now().UnixNano())
+	rkv.Set(GoodsName, GoodsNum, expiration)
+	rkv.Set(GoodsName + "sold", 0, expiration)
 
 	pb.RegisterSeckillHandler(
 		service.Server(),
