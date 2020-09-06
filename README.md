@@ -7,10 +7,11 @@
 ![overview](https://github.com/WindNotStop/seckill/blob/master/arch.png)
 
 ## Roadmap
-- [x] Grpc网关
+- [x] Grpc-gateway
 - [x] 秒杀服务
 - [x] Redis集群
 - [x] 服务限流
+- [ ] Traefik
 - [ ] 动态配置
 - [ ] Mysql集群
 - [ ] 用户管理服务
