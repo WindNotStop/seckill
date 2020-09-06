@@ -22,10 +22,8 @@ spec:
             - name: http
               containerPort: 8081
           livenessProbe:
-            httpGet:
-              path: /
+            tcpSocket:
               port: http
           readinessProbe:
-            httpGet:
-              path: /
+            tcpSocket:
               port: http
