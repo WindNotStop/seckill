@@ -1,7 +1,7 @@
 # 基于云原生的秒杀系统
 ## Introduction
-- 容器化应用，面向微服务
-- 无缝融入Kubernetes, Istio，实现服务高可用，易观测
+- 容器化应用，微服务架构
+- 无缝融入Kubernetes、 Istio，实现服务高可用、弹性扩展、易于观测等
 
 ## Architecture
 ![overview](https://github.com/WindNotStop/seckill/blob/master/arch.png)
