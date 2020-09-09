@@ -1,6 +1,7 @@
 package main
 
 import (
+	"strconv"
 	"time"
 
 	. "github.com/WindNotStop/seckill/seckill/config"
@@ -19,7 +20,7 @@ func main() {
 	service := micro.NewService(
 		micro.Name(ServiceName),
 		micro.Version(ServiceVersion),
-		micro.WrapHandler(ratelimiter.NewHandlerWrapper(ratelimit.NewBucket(FillInterval,Capacity),false)),
+		micro.WrapHandler(ratelimiter.NewHandlerWrapper(ratelimit.NewBucket(FillInterval, Capacity), false)),
 	)
 	service.Init()
 
@@ -29,9 +30,12 @@ func main() {
 		log.Error(err.Error())
 	}
 	rkv := redis.NewClient(redisOptions)
-	expiration := time.Duration(EndTime.UnixNano()-time.Now().UnixNano())
+	expiration := time.Duration(EndTime.UnixNano() - time.Now().UnixNano())
 	rkv.Set(GoodsName, GoodsNum, expiration)
-	rkv.Set(GoodsName + "sold", 0, expiration)
+	rkv.Set(GoodsName+"_sold", 0, expiration)
+	for i := 0; i < GoodsNum; i++ {
+		rkv.RPush(GoodsName+"_store", GoodsName+strconv.Itoa(i))
+	}
 
 	pb.RegisterSeckillHandler(
 		service.Server(),

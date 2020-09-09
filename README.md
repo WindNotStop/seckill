@@ -6,6 +6,9 @@
 ## Architecture
 ![overview](https://github.com/WindNotStop/seckill/blob/master/arch.png)
 
+## Flow
+![overview](https://github.com/WindNotStop/seckill/blob/master/flow.png)
+
 ## Roadmap
 - [x] Grpc-gateway
 - [x] 秒杀服务
