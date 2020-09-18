@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"strconv"
 	"time"
 
@@ -15,7 +16,11 @@ import (
 	"github.com/micro/go-micro/v2/util/log"
 )
 
+var serverAddress = flag.String("server_address",  ":9090", "server_address")
+var mode = flag.String("mode",  "local", "mode")
+
 func main() {
+	flag.Parse()
 
 	service := micro.NewService(
 		micro.Name(ServiceName),
@@ -23,13 +28,25 @@ func main() {
 		micro.WrapHandler(ratelimiter.NewHandlerWrapper(ratelimit.NewBucket(FillInterval, Capacity), false)),
 	)
 	service.Init()
-
-	nodes := []string{RedisURL}
-	redisOptions, err := redis.ParseURL(nodes[0])
-	if err != nil {
-		log.Error(err.Error())
+	
+	var rkv *redis.Client
+	switch *mode {
+	case "local":
+		nodes := []string{RedisURL}
+		redisOptions, err := redis.ParseURL(nodes[0])
+		if err != nil {
+			log.Error(err.Error())
+		}
+		rkv = redis.NewClient(redisOptions)
+	case "k8s":
+		rkv = redis.NewFailoverClient(&redis.FailoverOptions{
+			MasterName:    MasterName,
+			SentinelAddrs: []string{RedisSentinelURL},
+		})
+	default:
+		return
 	}
-	rkv := redis.NewClient(redisOptions)
+
 	expiration := time.Duration(EndTime.UnixNano() - time.Now().UnixNano())
 	rkv.Set(GoodsName, GoodsNum, expiration)
 	rkv.Set(GoodsName+"_sold", 0, expiration)
