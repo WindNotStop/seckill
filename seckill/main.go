@@ -16,8 +16,8 @@ import (
 	"github.com/micro/go-micro/v2/util/log"
 )
 
-var serverAddress = flag.String("server_address",  ":9090", "server_address")
-var mode = flag.String("config",  "local", "mode")
+var serverAddress = flag.String("server_address", ":9090", "server_address")
+var mode = flag.String("config", "local", "mode")
 
 func main() {
 	flag.Parse()
@@ -28,7 +28,7 @@ func main() {
 		micro.WrapHandler(ratelimiter.NewHandlerWrapper(ratelimit.NewBucket(FillInterval, Capacity), false)),
 	)
 	service.Init()
-	
+
 	var rkv *redis.Client
 	switch *mode {
 	case "local":
@@ -48,10 +48,17 @@ func main() {
 	}
 
 	expiration := time.Duration(EndTime.UnixNano() - time.Now().UnixNano())
-	rkv.Set(GoodsName, GoodsNum, expiration)
-	rkv.Set(GoodsName+"_sold", 0, expiration)
-	for i := 0; i < GoodsNum; i++ {
-		rkv.RPush(GoodsName+"_store", GoodsName+strconv.Itoa(i))
+	init, err := rkv.SetNX("init", 1, expiration).Result()
+	if err != nil {
+		log.Error(err.Error())
+		return
+	}
+	if init {
+		rkv.Set(GoodsName, GoodsNum, expiration)
+		rkv.Set(GoodsName+"_sold", 0, expiration)
+		for i := 0; i < GoodsNum; i++ {
+			rkv.RPush(GoodsName+"_store", GoodsName+strconv.Itoa(i))
+		}
 	}
 
 	pb.RegisterSeckillHandler(

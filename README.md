@@ -46,6 +46,7 @@ curl localhost:8081/v1/seckill?name=iphone
 ```
 ### Kubernates
 ```
+
 # run redis
 helm install redis seckill/charts/redis/
 
