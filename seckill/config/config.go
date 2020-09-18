@@ -8,7 +8,7 @@ var(
 
 	RedisURL = "redis://redis:6379"
 	MasterName = "mymaster"
-	RedisSentinelURL = "redis://rfs-redisfailover:26379"
+	RedisSentinelAddress = "rfs-redisfailover:26379"
 
 	GoodsName = "iphone"
 	GoodsNum = 10

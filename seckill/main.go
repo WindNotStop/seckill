@@ -41,7 +41,7 @@ func main() {
 	case "k8s":
 		rkv = redis.NewFailoverClient(&redis.FailoverOptions{
 			MasterName:    MasterName,
-			SentinelAddrs: []string{RedisSentinelURL},
+			SentinelAddrs: []string{RedisSentinelAddress},
 		})
 	default:
 		return
