@@ -17,7 +17,7 @@ import (
 )
 
 var serverAddress = flag.String("server_address",  ":9090", "server_address")
-var mode = flag.String("mode",  "local", "mode")
+var mode = flag.String("config",  "local", "mode")
 
 func main() {
 	flag.Parse()
